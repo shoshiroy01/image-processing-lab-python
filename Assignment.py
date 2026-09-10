@@ -1,35 +1,43 @@
 import cv2
 import matplotlib.pyplot as plt
 
-img_bgr = cv2.imread('img1.jpg') 
+image1 = cv2.imread('img1.jpg')   
 
-if img_bgr is None:
-    print("Error: Could not load image. Check the file path.")
-else:
-    
-    img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+image_rgb = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
 
-    height, width, channels = img_bgr.shape
-    print(f"Image Dimensions: {height}x{width} with {channels} color channels")
+plt.imshow(image_rgb)  
+plt.axis('off')        
+plt.title('Original Image')  
+plt.show()             
 
-    pixel_val = img_rgb[0, 0] 
-    print(f"RGB value at top-left pixel (0,0): {pixel_val}")
+print('Image shape:', image_rgb.shape)
 
-    img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
+pixel_value = image1[100, 100]  
+print('Pixel value at (100,100):', pixel_value)
 
-    print("\nFirst 3x3 pixel grid (Grayscale numeric values):")
-    print(img_gray[:3, :3])
+gray_image = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)  
 
-    plt.figure(figsize=(10, 5))
+print('Grayscale Image shape:', gray_image.shape)
 
-    plt.subplot(1, 2, 1)
-    plt.imshow(img_rgb)
-    plt.title('RGB Image')
-    plt.axis('off')
+plt.imshow(gray_image, cmap='gray')
+plt.axis('off')
+plt.title('Gray Scale Image')
+plt.show()
 
-    plt.subplot(1, 2, 2)
-    plt.imshow(img_gray, cmap='gray')
-    plt.title('Grayscale Image')
-    plt.axis('off')
+resize = cv2.resize(image_rgb, (300, 300))
 
-    plt.show()
+plt.imshow(resize)
+plt.axis('off')
+plt.title('Resized Image (300 x 300)')
+plt.show()
+
+crop = image_rgb[100:400, 100:400]
+
+plt.imshow(crop)
+plt.axis('off')
+plt.title('Cropped Image')
+plt.show()
+
+cv2.imwrite('gray_output.jpg', gray_image)
+
+print('Grayscale image saved as gray_output.jpg')
